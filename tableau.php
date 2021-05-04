@@ -96,7 +96,7 @@ if (!$_SESSION['nom_user']) {
 function selectAllEmploye()
 {
     $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $result = $db->query("select * from employes;");
+    $result = $db->query("SELECT * FROM employes;");
     $d = $result->fetch_all(MYSQLI_ASSOC);
     //$d = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $result->free();

@@ -129,7 +129,7 @@ WHERE noemp = " . $tab["id"] . ";";
 function selectAllById($id)
 {
     $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $stmt = $db->prepare("SELECT * from employes where noemp = ?");
+    $stmt = $db->prepare("SELECT * FROM employes WHERE noemp = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $rs = $stmt->get_result();

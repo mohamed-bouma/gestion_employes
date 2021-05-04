@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!$_SESSION['nom']) {
+if (!$_SESSION['nom_user']) {
     header('Location: index.php');
 }
 ?>
@@ -18,20 +18,21 @@ if (!$_SESSION['nom']) {
 
 <body>
 
-    <form action="requet-ajout.php" method="POST">
-        <input type="hidden" readonly class="form-control" name="noemp">
-        <input type=" text" class="form-control" name="nom" placeholder="modifier nom">
-        <input type="text" class="form-control" name="prenom" placeholder="modifier prenom">
-        <input type="text" class="form-control" name="emploi" placeholder="modifier emploi">
-        <input type="number" class="form-control" name="sup" placeholder="modifier sup">
-        <input type="date" class="form-control" name="embauche" placeholder="modifier embauche">
-        <input type="number" class="form-control" name="sal" placeholder="modifier salaire">
-        <input type="number" class="form-control" name="comm" placeholder="modifier commission">
-        <input type="number" class="form-control" name="noserv" placeholder="modifier noserv">
-        <input type="submit" class="btn btn-success" value="Soumettre">
-    </form>
+    <div class="container">
+        <form action="requete_ajout.php" method="POST">
+            <input type="hidden" readonly class="form-control" name="noemp">
+            <input type=" text" class="form-control" name="nom" placeholder="Nom">
+            <input type="text" class="form-control" name="prenom" placeholder="Prenom">
+            <input type="text" class="form-control" name="emploi" placeholder="Emploi">
+            <input type="number" class="form-control" name="sup" placeholder="Suppérieur">
+            <input type="date" class="form-control" name="embauche" placeholder="Date d'embauche">
+            <input type="number" class="form-control" name="sal" placeholder="Salaire">
+            <input type="number" class="form-control" name="comm" placeholder="Commission">
+            <input type="number" class="form-control" name="noserv" placeholder="Numero Service">
+            <input type="submit" class="btn btn-success" value="Soumettre">
 
-
+        </form>
+    </div>
 </body>
 
 </html>
