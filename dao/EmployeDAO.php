@@ -1,6 +1,6 @@
 <?php
 
-include_once("model/Employe.php");
+include_once(__DIR__ . "/../model/Employe.php");
 
 class EmployeDAO
 {

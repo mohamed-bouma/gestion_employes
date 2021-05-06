@@ -28,20 +28,36 @@ class EmployeService
     }
     public function nextId()
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->nextId();
+        return $employe;
     }
     public function supprimerEmp($noemp)
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->supprimerEmp($noemp);
     }
     public function updateEmp(Employe $obj, int $noemp)
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->updateEmp($obj, $noemp);
     }
     public function detailByName(int $id)
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->detailByName($id);
+        return $employe;
     }
     function listeChef()
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->listeChef();
+        return $employe;
     }
     function compteur()
     {
+        $employeDao = new EmployeDAO();
+        $employe = $employeDao->compteur();
+        return $employe;
     }
 }
