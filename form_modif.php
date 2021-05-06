@@ -105,35 +105,3 @@ if (!$_SESSION['nom_user']) {
 </body>
 
 </html>
-
-<?php
-
-function updateEmploye($tab, $comm)
-{
-    $bdd = mysqli_init();
-    mysqli_real_connect($bdd, "127.0.0.1", "root", "", "gestion_employes");
-    $requette = "UPDATE employes SET 
-nom = '" . $tab["nom"] . "',
-prenom = '" . $tab["prenom"] . "',
-emploi = '" . $tab["emploi"] . "',
-sup = " . $tab["sup"] . ",
-embauche = '" . $tab["embauche"] . "',
-sal = " . $tab["sal"] . ",
-comm = " . $comm . ",
-noserv = " . $tab["noserv"] . "
-WHERE noemp = " . $tab["id"] . ";";
-    mysqli_query($bdd, $requette);
-    mysqli_close($bdd);
-}
-
-function selectAllById($id)
-{
-    $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $stmt = $db->prepare("SELECT * FROM employes WHERE noemp = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $rs = $stmt->get_result();
-    $tabNom = $rs->fetch_array(MYSQLI_ASSOC);
-    $db->close();
-    return $tabNom;
-}

@@ -74,34 +74,3 @@
     </body>
 
     </html>
-
-    <?php
-    function nextId()
-    {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-        $findNextId = $db->query("SELECT max(id) FROM utilisateur;");
-        $data = $findNextId->fetch_array(MYSQLI_NUM);
-        //$data = mysqli_fetch_array($max, MYSQLI_NUM);
-        $findNextId->free();
-        $nextId = $data[0] + 1;
-        $db->close();
-        return $nextId;
-    }
-
-    function listeNomUser()
-    {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-        $nomUnique = $db->query("SELECT DISTINCT nom_user FROM utilisateur;");
-        $tabNom = $nomUnique->fetch_array(MYSQLI_ASSOC);
-        // $tabNom = mysqli_fetch_array($requeteNomUnique, MYSQLI_ASSOC);
-        $nomUnique->free();
-        $db->close();
-        return $tabNom;
-    }
-    function insererUser($id, $nom, $mdpHash)
-    {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-        $inserer = $db->query("INSERT INTO utilisateur (id, nom_user, hash_password) 
-        VALUES (" . $id . ", '" . $nom . "', '" . $mdpHash . "');");
-        $db->close();
-    }

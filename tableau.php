@@ -91,39 +91,3 @@ if (!$_SESSION['nom_user']) {
 </body>
 
 </html>
-<?php
-
-function selectAllEmploye()
-{
-    $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $result = $db->query("SELECT * FROM employes;");
-    $d = $result->fetch_all(MYSQLI_ASSOC);
-    //$d = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    $result->free();
-    $db->close();
-    return $d;
-}
-
-function listeChef()
-{
-    $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $stmt = $db->prepare("SELECT DISTINCT sup FROM employes;");
-    $stmt->execute();
-    $rs = $stmt->get_result();
-    $tabSup = $rs->fetch_all(MYSQLI_ASSOC);
-    //$tabSup = mysqli_fetch_all($afficheSup, MYSQLI_ASSOC);
-    $rs->free();
-    $db->close();
-    return $tabSup;
-}
-
-function compteur()
-{
-    $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $saisie = $db->query("SELECT COUNT(date_ajout) FROM employes WHERE date_ajout = DATE_FORMAT(SYSDATE(),'%Y-%m-%d');");
-    $compteur = $saisie->fetch_array(MYSQLI_NUM);
-    //$compteur = mysqli_fetch_array($resultatDate, MYSQLI_NUM);
-    $saisie->free();
-    $db->close();
-    return $compteur;
-}

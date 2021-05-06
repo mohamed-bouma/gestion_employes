@@ -65,16 +65,3 @@ if (!empty($_POST["nom_user"]) && !empty($_POST["hash_password"])) {
 </body>
 
 </html>
-<?php
-
-function selectAllByNom($nom)
-{
-    $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE nom_user = ?");
-    $stmt->bind_param("s", $nom);
-    $stmt->execute();
-    $rs = $stmt->get_result();
-    $dataUtilisateur = $rs->fetch_array(MYSQLI_ASSOC);
-    $db->close();
-    return $dataUtilisateur;
-}

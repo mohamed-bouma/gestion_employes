@@ -1,4 +1,5 @@
 <?php
+include_once(__DIR__ . "/model/Service.php");
 
 class Employe
 {
@@ -10,12 +11,12 @@ class Employe
     private $sup;
     private $sal;
     private $comm;
-    private $noserv;
+    private Service $service;
 
     /**
      * Get the value of noemp
      */
-    public function getNoemp()
+    public function getNoemp(): int
     {
         return $this->noemp;
     }
@@ -25,7 +26,7 @@ class Employe
      *
      * @return  self
      */
-    public function setNoemp($noemp)
+    public function setNoemp(int $noemp)
     {
         $this->noemp = $noemp;
 
@@ -35,7 +36,7 @@ class Employe
     /**
      * Get the value of nom
      */
-    public function getNom()
+    public function getNom(): string
     {
         return $this->nom;
     }
@@ -45,7 +46,7 @@ class Employe
      *
      * @return  self
      */
-    public function setNom($nom)
+    public function setNom(string $nom)
     {
         $this->nom = $nom;
 
@@ -55,7 +56,7 @@ class Employe
     /**
      * Get the value of prenom
      */
-    public function getPrenom()
+    public function getPrenom(): string
     {
         return $this->prenom;
     }
@@ -65,7 +66,7 @@ class Employe
      *
      * @return  self
      */
-    public function setPrenom($prenom)
+    public function setPrenom(string $prenom)
     {
         $this->prenom = $prenom;
 
@@ -75,7 +76,7 @@ class Employe
     /**
      * Get the value of emploi
      */
-    public function getEmploi()
+    public function getEmploi(): string
     {
         return $this->emploi;
     }
@@ -85,7 +86,7 @@ class Employe
      *
      * @return  self
      */
-    public function setEmploi($emploi)
+    public function setEmploi(string $emploi)
     {
         $this->emploi = $emploi;
 
@@ -95,7 +96,7 @@ class Employe
     /**
      * Get the value of embauche
      */
-    public function getEmbauche()
+    public function getEmbauche(): string
     {
         return $this->embauche;
     }
@@ -105,7 +106,7 @@ class Employe
      *
      * @return  self
      */
-    public function setEmbauche($embauche)
+    public function setEmbauche(string $embauche)
     {
         $this->embauche = $embauche;
 
@@ -115,7 +116,7 @@ class Employe
     /**
      * Get the value of sup
      */
-    public function getSup()
+    public function getSup(): int
     {
         return $this->sup;
     }
@@ -125,7 +126,7 @@ class Employe
      *
      * @return  self
      */
-    public function setSup($sup)
+    public function setSup(int $sup)
     {
         $this->sup = $sup;
 
@@ -135,7 +136,7 @@ class Employe
     /**
      * Get the value of sal
      */
-    public function getSal()
+    public function getSal(): float
     {
         return $this->sal;
     }
@@ -145,7 +146,7 @@ class Employe
      *
      * @return  self
      */
-    public function setSal($sal)
+    public function setSal(float $sal)
     {
         $this->sal = $sal;
 
@@ -155,7 +156,7 @@ class Employe
     /**
      * Get the value of comm
      */
-    public function getComm()
+    public function getComm(): float
     {
         return $this->comm;
     }
@@ -165,29 +166,31 @@ class Employe
      *
      * @return  self
      */
-    public function setComm($comm)
+    public function setComm(float $comm)
     {
         $this->comm = $comm;
 
         return $this;
     }
 
+
+
     /**
-     * Get the value of noserv
+     * Get the value of service
      */
-    public function getNoserv()
+    public function getService(): Service
     {
-        return $this->noserv;
+        return $this->service;
     }
 
     /**
-     * Set the value of noserv
+     * Set the value of service
      *
      * @return  self
      */
-    public function setNoserv($noserv)
+    public function setService(Service $service)
     {
-        $this->noserv = $noserv;
+        $this->service = $service;
 
         return $this;
     }
