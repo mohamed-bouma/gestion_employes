@@ -8,8 +8,8 @@ class UtilisateurService
 
     public function insertUser(Utilisateur $user): void
     {
-        $mdpHash = password_hash($user->gethash_password(), PASSWORD_DEFAULT);
-        $user->gethash_password($mdpHash);
+        $mdpHash = password_hash($user->getHash_password(), PASSWORD_DEFAULT);
+        $user->getHash_password($mdpHash);
 
         $userDAO = new UtilisateurDAO();
         $userDAO->insertUser($user);
