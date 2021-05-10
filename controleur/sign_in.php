@@ -1,10 +1,12 @@
 <?php
+include_once(__DIR__ . "/../service/UtilisateurService.php");
 
 $isThereError = false;
 $msg = [];
 if (!empty($_POST["nom_user"]) && !empty($_POST["hash_password"])) {
+    $obj = new UtilisateurService;
 
-    $dataUtilisateur = selectAllByNom($_POST["nom_user"]);
+    $dataUtilisateur = $obj->selectAllByNom($_POST["nom_user"]);
     if (password_verify($_POST["hash_password"], $dataUtilisateur["hash_password"])) {
         session_start();
         $_SESSION["nom_user"] = $dataUtilisateur["nom_user"];

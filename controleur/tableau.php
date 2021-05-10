@@ -1,9 +1,10 @@
 <?php
+include_once(__DIR__ . "/../service/EmployeService.php");
+
 session_start();
 if (!$_SESSION['nom_user']) {
     header('Location: index.php');
 }
-include_once(__DIR__ . "/../../service/EmployeService.php");
 
 ?>
 
@@ -21,17 +22,17 @@ include_once(__DIR__ . "/../../service/EmployeService.php");
 
 <body>
     <?php
-
-    $donnees = selectAllEmploye();
+    $obj = new EmployeService;
+    $donnees = $obj->selectAll();
 
     $tableau = [];
 
-    $tabSup = listeChef();
+    $tabSup = $obj->listeChef();
 
     for ($i = 0; $i < sizeof($tabSup); $i++) {
         $tableau[$i] = $tabSup[$i]["sup"];
     }
-    $compteur = compteur();
+    $compteur = $obj->compteur();
 
     ?>
 
@@ -62,20 +63,20 @@ include_once(__DIR__ . "/../../service/EmployeService.php");
         foreach ($donnees as $employe) {
         ?>
             <tr>
-                <td><?php echo $employe['noemp']; ?></td>
-                <td><?php echo $employe['nom']; ?></td>
-                <td><?php echo $employe['prenom']; ?></td>
-                <td><?php echo $employe['emploi']; ?></td>
-                <td><?php echo $employe['sup']; ?></td>
-                <td><?php echo $employe['embauche']; ?></td>
-                <td><?php echo $employe['sal']; ?></td>
-                <td><?php echo $employe['comm']; ?></td>
-                <td><?php echo $employe['noserv']; ?></td>
-                <td><?php echo $employe['date_ajout']; ?></td>
+                <td><?php echo $employe->getNoemp(); ?></td>
+                <td><?php echo $employe->getNom(); ?></td>
+                <td><?php echo $employe->getPrenom(); ?></td>
+                <td><?php echo $employe->getEmploi(); ?></td>
+                <td><?php echo $employe->getSup(); ?></td>
+                <td><?php echo $employe->getEmbauche(); ?></td>
+                <td><?php echo $employe->getSal(); ?></td>
+                <td><?php echo $employe->getComm(); ?></td>
+                <td><?php echo $employe->getNoserv(); ?></td>
+                <td><?php echo $employe->getDate_Ajout(); ?></td>
                 <?php if ($_SESSION["profil"] == "admin") { ?>
                     <td><a href='#'><button class='btn btn-primary'>detail</button></a></td>
-                    <td><a href='form_modif.php?id=<?php echo $employe["noemp"]; ?>'><button class='btn btn-warning'>Modifier</button></a></td>
-                    <td><a href='supprimer.php?id=<?php echo $employe['noemp']; ?>'><?php if (!in_array($employe['noemp'], $tableau)) { ?><button class='btn btn-danger'>suprimer</button></a><?php } ?></td>
+                    <td><a href='form_modif.php?id=<?php echo $employe->getNoemp(); ?>'><button class='btn btn-warning'>Modifier</button></a></td>
+                    <td><a href='supprimer.php?id=<?php echo $employe->getNoemp(); ?>'><?php if (!in_array($employe->getNoemp(), $tableau)) { ?><button class='btn btn-danger'>suprimer</button></a><?php } ?></td>
                 <?php } ?>
             </tr>
 

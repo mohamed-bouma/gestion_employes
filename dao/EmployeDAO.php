@@ -1,13 +1,14 @@
 <?php
 
 include_once(__DIR__ . "/../model/Employe.php");
+include_once(__DIR__ . "/../model/Common.php");
 
-class EmployeDAO
+class EmployeDAO extends Common
 {
-    public function searchByNoemp(int $id)
+    public function searchByNoemp(int $id): Employe
     {
 
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM employes WHERE noemp =?;");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -33,9 +34,9 @@ class EmployeDAO
 
 
 
-    public function selectAll()
+    public function selectAll(): Employe
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM employes;");
         $stmt->execute();
         $rs = $stmt->get_result();
@@ -55,12 +56,12 @@ class EmployeDAO
             $tabObj[] = $obj;
         }
         $db->close();
-        return $tabObj;
+        return $obj;
     }
 
-    public function insert(Employe $obj)
+    public function insert(Employe $obj): void
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $id = $this->nextId();
         $nom = $obj->getNom();
         $prenom = $obj->getPrenom();
@@ -88,9 +89,9 @@ class EmployeDAO
         $db->close();
     }
 
-    public function nextId()
+    public function nextId(): array
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT Max(noemp) FROM employes;");
         $stmt->execute();
         $rs = $stmt->get_result();
@@ -101,18 +102,18 @@ class EmployeDAO
         return $nextId;
     }
 
-    public function supprimerEmp($noemp)
+    public function supprimerEmp($noemp): void
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("DELETE FROM employes WHERE noemp =?;");
         $stmt->bind_param("i", $noemp);
         $stmt->execute();
         $db->close();
     }
 
-    public function updateEmp(Employe $obj, int $noemp)
+    public function updateEmp(Employe $obj, int $noemp): void
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $nom = $obj->getNom();
         $prenom = $obj->getPrenom();
         $emploi = $obj->getEmploi();
@@ -145,9 +146,9 @@ class EmployeDAO
         $db->close();
     }
 
-    public function detailByName(int $id)
+    public function detailByName(int $id): Employe
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM employes as e INNER JOIN services AS s ON e.noserv = s.noserv WHERE noemp =?;");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -171,9 +172,9 @@ class EmployeDAO
         return $obj;
     }
 
-    function listeChef()
+    function listeChef(): array
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT DISTINCT sup FROM employes;");
         $stmt->execute();
         $rs = $stmt->get_result();
@@ -183,9 +184,9 @@ class EmployeDAO
         return $tabSup;
     }
 
-    function compteur()
+    function compteur(): int
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $saisie = $db->query("SELECT COUNT(date_ajout) FROM employes WHERE date_ajout = DATE_FORMAT(SYSDATE(),'%Y-%m-%d');");
         $compteur = $saisie->fetch_array(MYSQLI_NUM);
         $saisie->free();

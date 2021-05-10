@@ -1,14 +1,15 @@
 <?php
 
 include_once(__DIR__ . "/../model/Utilisateur.php");
+include_once(__DIR__ . "/../model/Common.php");
 
-class UtilisateurDAO
+class UtilisateurDAO extends Common
 {
 
     public function searchById(int $id)
     {
 
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM utilisateur WHERE id =?;");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -27,7 +28,7 @@ class UtilisateurDAO
 
     public function selectAll()
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM utilisateur;");
         $stmt->execute();
         $rs = $stmt->get_result();
@@ -47,7 +48,7 @@ class UtilisateurDAO
 
     public function insertUser(Utilisateur $obj)
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $id = $this->nextId();
         $nom = $obj->getNom_user();
         $mdp = $obj->getHash_password();
@@ -60,7 +61,7 @@ class UtilisateurDAO
 
     public function nextId()
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $stmt = $db->prepare("SELECT Max(id) FROM utilisateur;");
         $stmt->execute();
         $rs = $stmt->get_result();
@@ -73,7 +74,7 @@ class UtilisateurDAO
 
     function listeNomUser()
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
+        $db = parent::connexion();
         $nomUnique = $db->query("SELECT DISTINCT nom_user FROM utilisateur;");
         $tabNom = $nomUnique->fetch_array(MYSQLI_ASSOC);
         // $tabNom = mysqli_fetch_array($requeteNomUnique, MYSQLI_ASSOC);
@@ -82,10 +83,10 @@ class UtilisateurDAO
         return $tabNom;
     }
 
-    function selectAllByNom($nom)
+    function selectAllByNom($nom): Utilisateur
     {
-        $db = new mysqli("127.0.0.1", "root", "", "gestion_employes");
-        $stmt = $db->prepare("SELECT * FROM utilisateur WHERE nom =?;");
+        $db = parent::connexion();
+        $stmt = $db->prepare("SELECT * FROM utilisateur WHERE nom_user =?;");
         $stmt->bind_param("s", $nom);
         $stmt->execute();
         $rs = $stmt->get_result();

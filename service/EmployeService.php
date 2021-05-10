@@ -20,41 +20,41 @@ class EmployeService
         $employe = $employeDao->insert($employe);
     }
 
-    public function selectAll()
+    public function selectAll(): Employe
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->selectAll();
         return $employe;
     }
-    public function nextId()
+    public function nextId(): array
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->nextId();
         return $employe;
     }
-    public function supprimerEmp($noemp)
+    public function supprimerEmp($noemp): void
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->supprimerEmp($noemp);
     }
-    public function updateEmp(Employe $obj, int $noemp)
+    public function updateEmp(Employe $obj, int $noemp): void
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->updateEmp($obj, $noemp);
     }
-    public function detailByName(int $id)
+    public function detailByName(int $id): Employe
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->detailByName($id);
         return $employe;
     }
-    function listeChef()
+    function listeChef(): array
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->listeChef();
         return $employe;
     }
-    function compteur()
+    function compteur(): int
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->compteur();

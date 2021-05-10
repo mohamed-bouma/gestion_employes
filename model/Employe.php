@@ -116,7 +116,7 @@ class Employe
     /**
      * Get the value of sup
      */
-    public function getSup(): int
+    public function getSup(): ?int
     {
         return $this->sup;
     }
@@ -126,7 +126,7 @@ class Employe
      *
      * @return  self
      */
-    public function setSup(int $sup)
+    public function setSup(?int $sup)
     {
         $this->sup = $sup;
 

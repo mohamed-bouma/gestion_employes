@@ -39,7 +39,7 @@ class UtilisateurService
         $user = $userDAO->listeNomUser();
         return $user;
     }
-    function selectAllByNom($nom)
+    function selectAllByNom($nom): Utilisateur
     {
         $userDAO = new UtilisateurDAO();
         $user = $userDAO->selectAllByNom($nom);
