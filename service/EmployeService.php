@@ -1,6 +1,5 @@
 <?php
 
-include_once(__DIR__ . "/../model/Employe.php");
 include_once(__DIR__ . "/../dao/EmployeDAO.php");
 
 class EmployeService
@@ -20,13 +19,13 @@ class EmployeService
         $employe = $employeDao->insert($employe);
     }
 
-    public function selectAll(): Employe
+    public function selectAll(): array
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->selectAll();
         return $employe;
     }
-    public function nextId(): array
+    public function nextId(): int
     {
         $employeDao = new EmployeDAO();
         $employe = $employeDao->nextId();

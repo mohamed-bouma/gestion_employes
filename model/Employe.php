@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . "/model/Service.php");
+include_once("Service.php");
 
 class Employe
 {
@@ -156,7 +156,7 @@ class Employe
     /**
      * Get the value of comm
      */
-    public function getComm(): float
+    public function getComm(): ?float
     {
         return $this->comm;
     }
@@ -166,7 +166,7 @@ class Employe
      *
      * @return  self
      */
-    public function setComm(float $comm)
+    public function setComm(?float $comm)
     {
         $this->comm = $comm;
 

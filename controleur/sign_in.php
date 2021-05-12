@@ -7,10 +7,10 @@ if (!empty($_POST["nom_user"]) && !empty($_POST["hash_password"])) {
     $obj = new UtilisateurService;
 
     $dataUtilisateur = $obj->selectAllByNom($_POST["nom_user"]);
-    if (password_verify($_POST["hash_password"], $dataUtilisateur["hash_password"])) {
+    if (password_verify($_POST["hash_password"], $dataUtilisateur->getHash_password())) {
         session_start();
-        $_SESSION["nom_user"] = $dataUtilisateur["nom_user"];
-        $_SESSION["profil"] = $dataUtilisateur["profil"];
+        $_SESSION["nom_user"] = $dataUtilisateur->getNom_user();
+        $_SESSION["profil"] = $dataUtilisateur->getProfil();
         header("location: tableau.php");
     } else {
         $isThereError = true;

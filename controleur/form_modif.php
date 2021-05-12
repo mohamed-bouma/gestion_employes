@@ -1,4 +1,6 @@
 <?php
+include_once(__DIR__ . "/../service/EmployeService.php");
+
 session_start();
 if (!$_SESSION['nom_user']) {
     header('Location: index.php');
@@ -20,10 +22,11 @@ if (!$_SESSION['nom_user']) {
 
     <?php
 
+    $obj = new EmployeService;
     $isThereError = false;
     $messages = [];
     if (isset($_GET["id"])) {
-        $donnees = selectAllById($_GET["id"]);
+        $donnees = $obj->searchByNoemp($_GET["id"]);
     }
 
     if (!empty($_POST)) {
@@ -66,18 +69,33 @@ if (!$_SESSION['nom_user']) {
         }
 
         if ($_POST["comm"] == "") {
-            $commission = "null";
+            $commission = null;
         } else {
             $commission = $_POST["comm"];
         }
 
         if (!$isThereError) {
-            updateEmploye($_POST, $commission);
+            $objPost = new Employe;
+            $id = $_GET["id"];
+            $objPost->setNoemp($id);
+            $objPost->setNom($_POST["nom"]);
+            $objPost->setPrenom($_POST["prenom"]);
+            $objPost->setEmploi($_POST["emploi"]);
+            $objPost->setSup($_POST["sup"]);
+            $objPost->setEmbauche($_POST["embauche"]);
+            $objPost->setSal($_POST["sal"]);
+            $objPost->setComm($commission);
+            $objService = new Service;
+            $objService->setNoserv($_POST["noserv"]);
+            $objPost->setService($objService);
+
+
+            $obj->updateEmp($objPost, $id);
 
             header("location: tableau.php");
         }
     }
-    if (isset($_GET["noemp"]) || $isThereError) {
+    if (isset($_GET["id"]) || $isThereError) {
 
         if ($isThereError) {
             foreach ($messages as $message) {
@@ -89,15 +107,15 @@ if (!$_SESSION['nom_user']) {
 
     ?>
     <form action="" method="POST">
-        <input type="hidden" readonly class="form-control" name="id" value="<?php echo $donnees['noemp']; ?>" hidden>
-        <input type="text" class="form-control" name="nom" value="<?php echo $isThereError ? $_POST["nom"] : $donnees['nom']; ?>" placeholder="modifier nom">
-        <input type="text" class="form-control" name="prenom" value="<?php echo $isThereError ? $_POST["prenom"] : $donnees['prenom']; ?>" placeholder="modifier prenom">
-        <input type="text" class="form-control" name="emploi" value="<?php echo $isThereError ? $_POST["emploi"] : $donnees['emploi']; ?>" placeholder="modifier emploi">
-        <input type="number" class="form-control" name="sup" value="<?php echo $isThereError ? $_POST["sup"] : $donnees['sup']; ?>" placeholder="modifier sup">
-        <input type="date" class="form-control" name="embauche" value="<?php echo  $isThereError ? $_POST["embauche"] : $donnees['embauche']; ?>" placeholder="modifier embauche">
-        <input type="number" class="form-control" name="sal" value="<?php echo $isThereError ? $_POST["sal"] : $donnees['sal']; ?>" placeholder="modifier salaire">
-        <input type="float" class="form-control" name="comm" value="<?php echo $isThereError ? $_POST["comm"] : $donnees['comm']; ?>" placeholder="modifier commission">
-        <input type="number" class="form-control" name="noserv" value="<?php echo $isThereError ? $_POST["noserv"] : $donnees['noserv']; ?>" placeholder="modifier noserv">
+        <input type="hidden" readonly class="form-control" name="id" value="<?php echo $donnees->getNoemp(); ?>" hidden>
+        <input type="text" class="form-control" name="nom" value="<?php echo $isThereError ? $_POST["nom"] : $donnees->getNom(); ?>" placeholder="modifier nom">
+        <input type="text" class="form-control" name="prenom" value="<?php echo $isThereError ? $_POST["prenom"] : $donnees->getPrenom(); ?>" placeholder="modifier prenom">
+        <input type="text" class="form-control" name="emploi" value="<?php echo $isThereError ? $_POST["emploi"] : $donnees->getEmploi(); ?>" placeholder="modifier emploi">
+        <input type="number" class="form-control" name="sup" value="<?php echo $isThereError ? $_POST["sup"] : $donnees->getSup(); ?>" placeholder="modifier sup">
+        <input type="date" class="form-control" name="embauche" value="<?php echo  $isThereError ? $_POST["embauche"] : $donnees->getEmbauche(); ?>" placeholder="modifier embauche">
+        <input type="number" class="form-control" name="sal" value="<?php echo $isThereError ? $_POST["sal"] : $donnees->getSal(); ?>" placeholder="modifier salaire">
+        <input type="float" class="form-control" name="comm" value="<?php echo $isThereError ? $_POST["comm"] : $donnees->getComm(); ?>" placeholder="modifier commission">
+        <input type="number" class="form-control" name="noserv" value="<?php echo $isThereError ? $_POST["noserv"] : $donnees->getService()->getNoserv(); ?>" placeholder="modifier noserv">
         <input type="submit" class="btn btn-success" value="Soumettre">
     </form>
 

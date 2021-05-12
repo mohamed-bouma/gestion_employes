@@ -1,7 +1,7 @@
 <?php
 
 include_once(__DIR__ . "/../model/Employe.php");
-include_once(__DIR__ . "/../model/Common.php");
+include_once(__DIR__ . "/Common.php");
 
 class EmployeDAO extends Common
 {
@@ -24,7 +24,9 @@ class EmployeDAO extends Common
         $obj->setEmbauche($tabEmploye["embauche"]);
         $obj->setSal($tabEmploye["sal"]);
         $obj->setComm($tabEmploye["comm"]);
-        $obj->service->setNoserv($tabEmploye["noserv"]);
+        $objService = new Service;
+        $objService->setNoserv($tabEmploye["noserv"]);
+        $obj->setService($objService);
 
         $db->close();
         return $obj;
@@ -34,7 +36,7 @@ class EmployeDAO extends Common
 
 
 
-    public function selectAll(): Employe
+    public function selectAll(): array
     {
         $db = parent::connexion();
         $stmt = $db->prepare("SELECT * FROM employes;");
@@ -52,11 +54,13 @@ class EmployeDAO extends Common
             $obj->setEmbauche($value["embauche"]);
             $obj->setSal($value["sal"]);
             $obj->setComm($value["comm"]);
-            $obj->service->setNoserv($value["noserv"]);
+            $objService = new Service;
+            $objService->setNoserv($value["noserv"]);
+            $obj->setService($objService);
             $tabObj[] = $obj;
         }
         $db->close();
-        return $obj;
+        return $tabObj;
     }
 
     public function insert(Employe $obj): void
@@ -70,9 +74,9 @@ class EmployeDAO extends Common
         $embauche = $obj->getEmbauche();
         $sal = $obj->getSal();
         $comm = $obj->getComm();
-        $noserv = $obj->service->setService();
+        $noserv = $obj->getService()->getNoserv();
         $stmt = $db->prepare("INSERT INTO employes(noemp, nom, prenom, emploi, sup, embauche, sal, comm, noserv)
-        VALUES(?,?,?,?,?,?,?,?);");
+        VALUES(?,?,?,?,?,?,?,?,?);");
         $stmt->bind_param(
             "isssisddi",
             $id,
@@ -89,7 +93,7 @@ class EmployeDAO extends Common
         $db->close();
     }
 
-    public function nextId(): array
+    public function nextId(): int
     {
         $db = parent::connexion();
         $stmt = $db->prepare("SELECT Max(noemp) FROM employes;");
@@ -111,9 +115,12 @@ class EmployeDAO extends Common
         $db->close();
     }
 
-    public function updateEmp(Employe $obj, int $noemp): void
+    public function updateEmp(Employe $obj, int $id): void
     {
+        var_dump($obj);
+        var_dump($id);
         $db = parent::connexion();
+
         $nom = $obj->getNom();
         $prenom = $obj->getPrenom();
         $emploi = $obj->getEmploi();
@@ -121,7 +128,8 @@ class EmployeDAO extends Common
         $embauche = $obj->getEmbauche();
         $sal = $obj->getSal();
         $comm = $obj->getComm();
-        $noserv = $obj->service->setService();
+        $noserv = $obj->getService()->getNoserv();
+
         $stmt = $db->prepare("UPDATE employes SET 
         nom=?,
         prenom=?,
@@ -130,9 +138,9 @@ class EmployeDAO extends Common
         embauche=?,
         sal=?,
         comm=?,
-        noserv=?, WHERE noemp = ?;");
+        noserv=? WHERE noemp = ?;");
         $stmt->bind_param(
-            "sssisddi",
+            "sssisddii",
             $nom,
             $prenom,
             $emploi,
@@ -141,6 +149,7 @@ class EmployeDAO extends Common
             $sal,
             $comm,
             $noserv,
+            $id
         );
         $stmt->execute();
         $db->close();
@@ -191,6 +200,6 @@ class EmployeDAO extends Common
         $compteur = $saisie->fetch_array(MYSQLI_NUM);
         $saisie->free();
         $db->close();
-        return $compteur;
+        return $compteur[0];
     }
 }

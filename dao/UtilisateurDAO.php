@@ -1,7 +1,7 @@
 <?php
 
 include_once(__DIR__ . "/../model/Utilisateur.php");
-include_once(__DIR__ . "/../model/Common.php");
+include_once(__DIR__ . "/Common.php");
 
 class UtilisateurDAO extends Common
 {

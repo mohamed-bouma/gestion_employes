@@ -31,12 +31,12 @@ if (!$_SESSION['nom_user']) {
 
     for ($i = 0; $i < sizeof($tabSup); $i++) {
         $tableau[$i] = $tabSup[$i]["sup"];
-    }
+    } //mettre au niveau du service (listeChef)
     $compteur = $obj->compteur();
 
     ?>
 
-    <div>nombre d'employes ajoutes aujourd'hui : <?php echo $compteur[0] ?></div>
+    <div>nombre d'employes ajoutes aujourd'hui : <?php echo $compteur ?></div>
     <a href='ajouter.php'><button class='btn btn-primary'>ajouter un nouveau employé</button></a>
     <hr>
     <a href='deco.php'><button class='btn btn-warning'>deconnexion</button></a>
@@ -52,7 +52,6 @@ if (!$_SESSION['nom_user']) {
             <th>sal</th>
             <th>comm</th>
             <th>noserv</th>
-            <th>date_ajout</th>
             <?php if ($_SESSION["profil"] == "admin") { ?>
                 <th>Detail</th>
                 <th>modifier</th>
@@ -71,8 +70,7 @@ if (!$_SESSION['nom_user']) {
                 <td><?php echo $employe->getEmbauche(); ?></td>
                 <td><?php echo $employe->getSal(); ?></td>
                 <td><?php echo $employe->getComm(); ?></td>
-                <td><?php echo $employe->getNoserv(); ?></td>
-                <td><?php echo $employe->getDate_Ajout(); ?></td>
+                <td><?php echo $employe->getService()->getNoserv(); ?></td>
                 <?php if ($_SESSION["profil"] == "admin") { ?>
                     <td><a href='#'><button class='btn btn-primary'>detail</button></a></td>
                     <td><a href='form_modif.php?id=<?php echo $employe->getNoemp(); ?>'><button class='btn btn-warning'>Modifier</button></a></td>
@@ -81,7 +79,7 @@ if (!$_SESSION['nom_user']) {
             </tr>
 
         <?php
-            // <?php if (!in_array($employe['noemp'], $tableau)) {
+
         }
 
         ?>
